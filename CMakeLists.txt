@@ -46,6 +46,11 @@ configure_file(
 	${CMAKE_CURRENT_SOURCE_DIR}/src/cmime_config.h
 )
 
+CONFIGURE_FILE(
+	${CMAKE_CURRENT_SOURCE_DIR}/test/test_data.h.cmake
+	${CMAKE_CURRENT_SOURCE_DIR}/test/test_data.h
+)
+
 add_subdirectory(src)
 add_subdirectory(test)
 
