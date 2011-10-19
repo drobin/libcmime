@@ -28,6 +28,7 @@
 #include "../src/cmime_list.h"
 #include "../src/cmime_part.h"
 
+#include "cmime_parser.tab.h"
 #include "test_data.h"
 
 char test_files[54][10] = {
@@ -45,6 +46,7 @@ char test_files[54][10] = {
 };
 
 int main (int argc, char const *argv[]) {
+	
 	CMimeMessage_T *msg = cmime_message_new();
 	char *s = NULL;
 	char *s2 = NULL;
@@ -164,7 +166,6 @@ int main (int argc, char const *argv[]) {
 		cmime_message_free(msg);
 		printf("passed!\n");
 	}
-	
 
 	return(0);
 }
