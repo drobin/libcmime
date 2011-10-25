@@ -28,7 +28,9 @@
 #include "../src/cmime_list.h"
 #include "../src/cmime_part.h"
 
-#include "cmime_parser.tab.h"
+#include "../src/cmime_parser.tab.h"
+#include "../src/cmime_internal.h"
+
 #include "test_data.h"
 
 char test_files[54][10] = {
@@ -46,7 +48,26 @@ char test_files[54][10] = {
 };
 
 int main (int argc, char const *argv[]) {
+	CMimeMessage_T *msg = cmime_message_new();
+	FILE *fp = NULL;
+	char *fname = NULL;
+	char *out = NULL;
 	
+//	asprintf(&fname,"%s/%s",SAMPLES_DIR,test_files[0]);
+	asprintf(&fname,"%s/test.txt",SAMPLES_DIR);
+	if ((fp = fopen(fname, "rb")) == NULL) 
+		return(-1);
+	free(fname);
+
+	yyrestart(fp);
+	yyparse(msg);
+	
+	out = cmime_message_to_string(msg);
+	printf("OUT:\n%s",out);
+	
+	fclose(fp);
+	
+/*	
 	CMimeMessage_T *msg = cmime_message_new();
 	char *s = NULL;
 	char *s2 = NULL;
@@ -166,6 +187,6 @@ int main (int argc, char const *argv[]) {
 		cmime_message_free(msg);
 		printf("passed!\n");
 	}
-
+*/
 	return(0);
 }
