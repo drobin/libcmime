@@ -64,7 +64,7 @@ int main (int argc, char const *argv[]) {
 	
 	out = cmime_message_to_string(msg);
 	printf("OUT:\n%s",out);
-	
+	free(out);
 	fclose(fp);
 	
 /*	
