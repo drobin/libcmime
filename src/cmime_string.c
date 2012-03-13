@@ -102,15 +102,26 @@ char *cmime_string_strip(char *s) {
 }
 
 char *cmime_string_chomp(char *s) {
-	assert(s);
 	char *p = NULL;
-	p = strrchr(s,'\n');
-	if(p) *p = '\0';
+
+	switch(s[strlen(s)-1]) {
+		case '\n':
+			if((p = strrchr(s,'\r')) != NULL ) *p = '\0';
+			else *(p = strrchr(s,'\n')) = '\0';
+			break;
+		case '\r':
+			*(p = strrchr(s,'\r')) = '\0';
+			break;
+		case '\x0c':
+			*(p = strrchr(s,'\x0c')) = '\0';
+			break;
+	}
+
 	return(s);
 }
 
 char *cmime_string_strstr_last(const char *s1, const char *s2) {
-	char* strp;
+	char *strp;
 	int len1, len2;
 
 	assert(s1);
@@ -136,3 +147,28 @@ char *cmime_string_strstr_last(const char *s1, const char *s2) {
 	return(NULL);
 }
 
+char *cmime_string_strsep_last(const char *s, const char *sep) {
+	int count = 0;
+	int seen = 0;
+	int pos = 0;
+	int len = strlen(sep);
+	char *out = NULL;
+	const char *it = s;
+	
+	while(*it != '\0') { 
+		if (strncmp(it,sep,len)==0) count++;
+		*it++;
+	}
+	
+	it = s;
+	out = (char *)malloc(strlen(s) + sizeof(char));
+	while(*it != '\0') {
+		if (strncmp(it,sep,len)==0) {
+			seen++;
+			if (seen == count) break;
+		} 		
+		out[pos++] = *it++;
+	}
+	out[pos] = '\0';
+	return(out);
+}

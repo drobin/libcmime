@@ -24,6 +24,7 @@
 #include "cmime_internal.h"
 #include "cmime_header.h"
 #include "cmime_string.h"
+#include "cmime_part.h"
 
 void _cmime_internal_header_destroy(void *data) {
 	assert(data);
@@ -33,7 +34,7 @@ void _cmime_internal_header_destroy(void *data) {
 
 char *_cmime_internal_determine_linebreak(const char *s) {
 	assert(s);
-	
+
 	if (strstr(s,CRLF)!=NULL)
 		return(CRLF);
 	else if(strstr(s,LF)!=NULL)
@@ -53,10 +54,10 @@ void _cmime_internal_set_linked_header_value(CMimeList_T *l, const char *key, co
 	assert(l);
 	assert(key);
 	assert(value);
-
+	
 	ptemp = (char *)value;		
 	ptemp = cmime_string_strip(ptemp);
-	
+
 	e = cmime_list_head(l);
 	while(e != NULL) {
 		h = (CMimeHeader_T *)cmime_list_data(e);
@@ -71,6 +72,7 @@ void _cmime_internal_set_linked_header_value(CMimeList_T *l, const char *key, co
 	cmime_header_set_name(h,key);
 	cmime_header_set_value(h,ptemp,0);
 	cmime_list_append(l,h);
+	
 	return;
 }
 
@@ -91,4 +93,30 @@ char *_cmime_internal_get_linked_header_value(CMimeList_T *l, const char *key) {
 	}
 	
 	return(NULL);
+}
+
+CMimeHeader_T *_cmime_internal_get_linked_header(CMimeList_T *l, const char *key) {
+	CMimeListElem_T *e;
+	CMimeHeader_T *h;
+	
+	assert(l);
+	assert(key);
+	
+	e = cmime_list_head(l);
+	while(e != NULL) {
+		h = (CMimeHeader_T *)cmime_list_data(e);
+		if (strcasecmp(cmime_header_get_name(h),key)==0) {
+			return(h);
+		}	
+		
+		e = e->next;
+	}
+	
+	return(NULL);
+}
+
+void _cmime_internal_parts_destroy(void *data) {
+	assert(data);
+	CMimePart_T *p = (CMimePart_T *)data;
+	cmime_part_free(p);
 }

@@ -5,12 +5,14 @@ project(libcmime)
 # check for build.properties
 include("${CMAKE_SOURCE_DIR}/build.properties" OPTIONAL)
 
-ENABLE_TESTING()
+enable_testing()
 
 # check prefix
 if(PREFIX)
 	SET(CMAKE_INSTALL_PREFIX ${PREFIX})
 endif(PREFIX)
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 # check out current version
 set(THREE_PART_VERSION_REGEX "[0-9]+\\.[0-9]+\\.[0-9]+")
@@ -33,13 +35,15 @@ if(ENABLE_DEBUG)
 	add_definitions(-DDEBUG -g -O0 -Wall)
 endif(ENABLE_DEBUG)
 
+find_package(FLEX REQUIRED)
+find_package(BISON REQUIRED)
 
 find_program(FILE_EXECUTABLE NAME file PATHS ENV PATH)
 if(NOT FILE_EXECUTABLE)
 	message(FATAL_ERROR "Could not find file executable")
 endif(NOT FILE_EXECUTABLE)
 
-CONFIGURE_FILE(
+configure_file(
 	${CMAKE_CURRENT_SOURCE_DIR}/src/cmime_config.h.cmake
 	${CMAKE_CURRENT_SOURCE_DIR}/src/cmime_config.h
 )
@@ -57,4 +61,3 @@ set(CPACK_PACKAGE_NAME "libcmime")
 set(CPACK_PACKAGE_VENDOR "Axel Steiner")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "libcmime - A C mime library")
 set(CPACK_PACKAGE_VERSION ${CMIME_VERSION})
-set(CPACK_COMPONENTS_ALL applications libraries headers)
