@@ -33,31 +33,31 @@
 
 /* Quoted-Printable translation-table */
 static unsigned char hexconv[256]={
-               20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
-               20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
-               20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
-                0,    1,    2,    3,    4,    5,    6,    7,    8,    9,   20,   20,   20,   20,   20,   20,\
-               20,   10,   11,   12,   13,   14,   15,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
-               20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
-               20,   10,   11,   12,   13,   14,   15,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
-               20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
-               20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
-               20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
-               20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
-               20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
-               20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
-               20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
-               20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
-               20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20 \
+    20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
+    20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
+    20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
+    0,    1,    2,    3,    4,    5,    6,    7,    8,    9,   20,   20,   20,   20,   20,   20,\
+    20,   10,   11,   12,   13,   14,   15,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
+    20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
+    20,   10,   11,   12,   13,   14,   15,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
+    20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
+    20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
+    20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
+    20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
+    20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
+    20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
+    20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
+    20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,\
+    20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20 \
 };
 
 char *cmime_qp_decode(char *line_in, int mode, char esc_char)  {
 
     char *line_out = NULL;
-    char c;                                                       /* output character */
-    int opos = 0;                                                 /* output positioning */
-    int ipos;                                                   	/* input positioning */
-    int len = strlen(line_in);                      							/* length of inputstring */
+    char c;                                                     /* output character */
+    int opos = 0;                                               /* output positioning */
+    int ipos;                                                   /* input positioning */
+    int len = strlen(line_in);                      			/* length of inputstring */
 
     /* we malloc size of line_in char as through decoding string just can get shorter, not longer */
     line_out = malloc(strlen(line_in)+1*sizeof(char));
@@ -142,9 +142,6 @@ char *cmime_qp_decode_multipart ( char *line_in) {
 	return line_out;
 }
 
-
-
-
 char *cmime_qp_encode(char *line_in, char *lt) {
 
 	char *line_out = NULL; /* output array */
@@ -164,10 +161,11 @@ char *cmime_qp_encode(char *line_in, char *lt) {
 
 	/* output array can only be 3 times size of line_in + 1 for \0 */
 	line_out_s = strlen(line_in)*3+1;
- line_out = malloc(line_out_s*sizeof(char));
+    line_out = malloc(line_out_s*sizeof(char));
 
 	/* set line terminator in case there is none given */
 	if(lt == NULL) lt = CRLF;
+	printf("ZEILENUMBRUCH: [%s]\n", lt);
 	
 	line_s = NULL;
 	line_e = line_in;
@@ -218,11 +216,9 @@ char *cmime_qp_encode(char *line_in, char *lt) {
 			}
 
 			if (cur_line_len +charout_size >= 76) {
-				//snprintf(op, out_remain, "%s=%s", paragraph, lt);
-				snprintf(op, out_remain, "%s=\r\n", paragraph);
-
+				snprintf(op, out_remain, "%s=%s", paragraph, lt);
 				op += strlen(paragraph); 																	// +3; /** jump the output + =\r\n **/
-				out_remain -= (strlen(paragraph)); 										// 	Was +3, updated to fix Outlook problems
+				out_remain += (strlen(paragraph)); 										// 	Was +3, updated to fix Outlook problems
 				
 				/* reinitialize the paragraph */
 				paragraph[0] = '\0';
@@ -237,20 +233,14 @@ char *cmime_qp_encode(char *line_in, char *lt) {
 			p++;
 			cur_line_len += charout_size; 
 		}
-		/* for each char in the line to be converted */
-		//printf("adding paragraph [%c] to output\n",paragraph);
-
-		snprintf(op, out_remain, "%s\r\n", paragraph);
-		op += (strlen(paragraph) +2);
-		out_remain -= (strlen(paragraph) +2);
+		snprintf(op, out_remain, "%s%s", paragraph,lt);
+		op += (strlen(paragraph) +3);
+		out_remain -= (strlen(paragraph) +3);
 
 	} while ((line_e < in_data_limit) && (*line_e != '\0'));
 
 	return line_out;
 }
-
-
-
 
 char *cmime_qp_rm_charenc(char *line_in) {
 	char *line_out = NULL;
