@@ -217,7 +217,7 @@ char *cmime_qp_encode(char *line_in, char *lt) {
 			if (cur_line_len +charout_size >= 76) {
 				snprintf(op, out_remain, "%s=%s", paragraph, lt);
 				op += strlen(paragraph); 																	// +3; /** jump the output + =\r\n **/
-				out_remain += (strlen(paragraph)); 										// 	Was +3, updated to fix Outlook problems
+				out_remain -= (strlen(paragraph)); 										// 	Was +3, updated to fix Outlook problems
 				
 				/* reinitialize the paragraph */
 				paragraph[0] = '\0';
