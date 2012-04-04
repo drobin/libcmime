@@ -117,8 +117,6 @@ CMimeMessage_T *cmime_message_new(void) {
     if (cmime_list_new(&message->recipients,_recipients_destroy)!=0) 
             return(NULL);
 
-    message->date = 0;
-    message->tz_offset = 0;
     message->boundary = NULL;
     message->gap = NULL;
     message->linebreak = NULL;
@@ -294,6 +292,36 @@ int cmime_message_add_recipient(CMimeMessage_T *message, const char *recipient, 
                 break;  
         }
     }
+
+    return(0);
+}
+
+int cmime_message_add_recipient_to(CMimeMessage_T *message, const char *recipient) {
+    assert(message);
+    assert(recipient);
+    
+    if(cmime_message_add_recipient(message, recipient, CMIME_ADDRESS_TYPE_TO) != 0)
+        return(-1);
+
+    return(0);
+}
+
+int cmime_message_add_recipient_cc(CMimeMessage_T *message, const char *recipient) {
+    assert(message);
+    assert(recipient);
+
+    if(cmime_message_add_recipient(message, recipient, CMIME_ADDRESS_TYPE_CC) != 0) 
+        return(-1);
+
+    return(0);
+}
+
+int cmime_message_add_recipient_bcc(CMimeMessage_T *message, const char *recipient) {
+    assert(message);
+    assert(recipient);
+
+    if(cmime_message_add_recipient(message, recipient, CMIME_ADDRESS_TYPE_BCC) != 0) 
+        return(-1);
 
     return(0);
 }
@@ -519,17 +547,20 @@ char *cmime_message_to_string(CMimeMessage_T *message) {
                         s2 = cmime_address_to_string(addr);
                         s = (char *)realloc(s,strlen(s) + strlen(s2) + sizeof(char));
                         strcat(s,s2);
-                        free(s2); 
-
-                        if (r->next != NULL) {
-                            addr = (CMimeAddress_T *)cmime_list_data(r->next);
-                            if (addr->type == t) {
-                                s = (char *)realloc(s,strlen(s) + 1 + sizeof(char));
-                                strcat(s,",");
-                            }
-                        }   
+                        free(s2);    
                     }
 
+                    if (r->next != NULL) {
+                        addr = (CMimeAddress_T *)cmime_list_data(r->next);
+                        if (addr->type == t) {
+                            s = (char *)realloc(s,strlen(s) + 1 + sizeof(char));
+                            strcat(s,",");
+                        }
+                    }
+<<<<<<< /home/ast/libcmime/src/cmime_message.c
+=======
+
+>>>>>>> /tmp/cmime_message.c~other.QS31sR
                     r = r->next;
                 }
             }
@@ -724,8 +755,5 @@ void cmime_message_add_attachment(CMimeMessage_T *message, char *attachment) {
     part->last = 1;
     cmime_list_append(message->parts,part);
 }
-
-
-
 
 
