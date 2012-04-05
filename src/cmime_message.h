@@ -468,8 +468,21 @@ int cmime_message_part_remove(CMimeMessage_T *message, CMimePart_T *part);
  */
 int cmime_message_add_child_part(CMimeMessage_T *message, CMimePart_T *part, CMimePart_T *child, CMimeMultipartType_T subtype);
 
+/*!
+ * @def cmime_message_part_first(message)
+ * @returns returns the first mime part of message
+ */
+#define cmime_message_part_first(message) ((CMimePart_T *)cmime_list_head(message->parts)->data)
+
+/*!
+ * @def cmime_message_part_last(message)
+ * @returns returns the last mime part of message
+ */
+#define cmime_message_part_last(message) ((CMimePart_T *)cmime_list_tail(message->parts)->data)
+
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* _CMIME_MESSAGE_H */
+
